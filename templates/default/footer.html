@@ -1,0 +1,232 @@
+{% load static %}
+
+ 
+
+
+
+<footer>
+
+	<div class="footerbefore">
+		<div class="container">
+			<script>
+		function subscribe()
+		{
+			var emailpattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+			var email = $('#txtemail').val();
+			if(email != "")
+			{
+				if(!emailpattern.test(email))
+				{
+					$('.text-danger').remove();
+					var str = '<span class="error">Invalid Email</span>';
+					$('#txtemail').after('<div class="text-danger">Invalid Email</div>');
+
+					return false;
+				}
+				else
+				{
+					$.ajax({
+						url: 'index.php?route=extension/module/newsletters/news',
+						type: 'post',
+						data: 'email=' + $('#txtemail').val(),
+						dataType: 'json',
+						
+									
+						success: function(json) {
+						
+						$('.text-danger').remove();
+						$('#txtemail').after('<div class="text-danger">' + json.message + '</div>');
+						
+						}
+						
+					});
+					return false;
+				}
+			}
+			else
+			{
+				$('.text-danger').remove();
+				$('#txtemail').after('<div class="text-danger">Email Is Require</div>');
+				$(email).focus();
+
+				return false;
+			}
+		}
+</script>
+<div class="newsletter">
+	<h5 class="news-title">Книгу нужно уметь читать</h5>
+	<div class="newsletter-message">Узнай о новинках первым</div>
+	<div class="newsright">
+		<form action="#" method="post">
+			<div class="form-group required">
+				<label class="col-sm-2 control-label" for="input-firstname">Электронная почта</label>
+				<div class="input-news">
+				  <input type="email" name="txtemail" id="txtemail" value="" placeholder="Введите ваш адрес электронной почты" class="form-control input-lg"> 
+				</div>			
+				<div class="subscribe-btn">
+				  <button type="submit" class="btn btn-default btn-lg" onclick="return subscribe();">Подписаться</button>   
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+		</div>
+	</div>
+	
+	<div id="footer" class="container">
+		<div class="row">
+      	<div class="footer-blocks">
+			
+			<div class="col-sm-3 column footerleft">
+				  <div id="czfootercmsblock" class="footer-cms-block">  
+<div id="footerlogo">
+<div class="footerdiv">
+<div class="footerlogo">
+	
+<img src="/media/{{config.LOGO}}" style="{{config.LOGO_O}}" title="capybook" alt="capybook" >
+
+</div>
+<div class="footerdesc">
+	Читай книги где угодно вместе с нами онлайн</div>
+</div> 
+</div>
+</div>
+<div class="social-block">
+<ul>
+<!-- <li class="facebook"><a href="/"><span>Фейсбук</span></a></li> -->
+<!-- <li class="twitter"><a href="/"><span>Твиттер</span></a></li> -->
+<li class="youtube"><a href="/"><span>YouTube</span></a></li>
+<li class="googleplus"><a href="/"><span>Гугл+</span></a></li>
+<!-- <li class="instagram"><a href="/"><span>Инстаграм</span></a></li> -->
+</ul>
+</div>
+
+			</div>
+	  
+		  			   
+		 	<div id="extra-link" class="col-sm-3 column">
+				<h5>Дополнительно</h5>
+				<ul class="list-unstyled">
+				
+					 <li><a  href="/onas/">О нас</a></li>
+					 <li><a  href="/dostavka/">Знания</a></li>
+					 <li><a  href="/politica/">политика конфиденциальности</a></li>
+					 <li><a  href="/info/">Условия использования</a></li>
+					 <li><a  href="/contact/">Связаться с нами</a></li>
+					 <!-- <li><a  href="/sitemap.xml">Карта сайта</a></li> -->
+				
+				
+				</ul>
+		  	</div>
+		  
+		  
+		  	<!-- <div class="col-sm-3 column">
+				<h5>Мой счет</h5>
+				<ul class="list-unstyled">
+				  <li><a href="/">Мой счет</a></li>
+				  <li><a href="/">История заказов</a></li>
+				  <li><a href="/">Список желаний</a></li>
+				  <li><a href="/">Новостная рассылка</a></li>
+				  <li><a href="/">Возврат</a></li>
+				</ul>
+		  	</div> -->
+
+		  	<div class="col-sm-3 column footerright">
+				  <div class="contact-block">
+<h5>Информация </h5>
+<ul>
+<li>
+<i class="fa fa-map-marker"></i>
+<span>работаем 24/7</span>
+</li>
+<li>
+<i class="fa fa-phone"></i>
+<span>(123)456-78-90/span>
+</li>
+<li>
+<i class="fa fa-fax"></i>
+<span>(123)456-78-90</span>
+</li>
+<li>
+<i class="fa fa-envelope-o"></i>
+<span>capybook@gmail.com</span>
+</li>
+</ul>
+</div>
+
+
+			</div>
+    	</div>
+				
+   		</div>
+    </div>
+
+	<div id="bottom-footer" class="bottomfooter">
+    	<div class="container">
+
+
+
+<!-- <li>
+<a href="/">Захар Прилепин</a>
+</li>
+<li>
+<a href="/">Алексей Иванов</a>
+</li> -->
+<!-- </ul>
+</div>
+  <div class="paiement_logo_block footer-block">
+<img src="/media/image/amex.png" alt="Amex" width="33" height="21">
+<img src="/media/image/maestro.png" alt="маэстро" width="33" height="21">
+<img src="/media/image/paypal.png" alt="PayPal" width="33" height="21">
+<img src="/media/image/master_card.png" alt="мастер_карта" width="33" height="21">
+</div> -->
+
+
+				<!-- <p id="powered" class="powered">Книжный магазин © 2024</p> -->
+				
+				
+		</div>
+	</div>
+</footer>
+
+<script src="/media/asm.custom.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#testimonial-carousel').owlCarousel({
+			singleItem: true,
+			navigation: false,
+			pagination: true,
+			autoPlay: false
+		}); 
+		
+		// Custom Navigation Events
+		$(".cztestimonial_next").click(function(){
+			$('#testimonial-carousel').trigger('owl.next');
+		})
+		$(".cztestimonial_prev").click(function(){
+			$('#testimonial-carousel').trigger('owl.prev');
+		});	
+		
+		$('.brand-carousel').owlCarousel({
+			items: 5,
+			itemsDesktop : [1199,4], 
+	     	itemsDesktopSmall : [767,3], 
+			itemsTablet: [480,2], 
+	     	itemsMobile : [380,1],
+			singleItem: false,
+			navigation: false,
+			pagination: false,
+			autoPlay: true			
+		}); 
+		// Custom Navigation Events
+		$(".brand-next").click(function(){
+			$('.brand-carousel').trigger('owl.next');
+		})
+		$(".brand-prev").click(function(){
+			$('.brand-carousel').trigger('owl.prev');
+		});
+	});	
+</script>

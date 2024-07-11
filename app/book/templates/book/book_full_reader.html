@@ -1,0 +1,348 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    {% include "header.html" %}
+
+
+    <style>
+        .input-file-row {
+            display: inline-block;
+        }
+
+        .input-file {
+            position: relative;
+            display: inline-block;
+        }
+
+        .input-file span {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            outline: none;
+            text-decoration: none;
+            font-size: 14px;
+            vertical-align: middle;
+            color: rgb(255 255 255);
+            text-align: center;
+            border-radius: 4px;
+            background-color: #e56220;
+            line-height: 22px;
+            height: 40px;
+            padding: 10px 20px;
+            box-sizing: border-box;
+            border: none;
+            margin: 0;
+            transition: background-color 0.2s;
+        }
+
+        .input-file input[type=file] {
+            position: absolute;
+            z-index: -1;
+            opacity: 0;
+            display: block;
+            width: 0;
+            height: 0;
+        }
+
+        /* Focus */
+        .input-file input[type=file]:focus + span {
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+        }
+
+        /* Hover/active */
+        .input-file:hover span {
+            background-color: #e37f4c;
+        }
+
+        .input-file:active span {
+            background-color: #e56220;
+        }
+
+        /* Disabled */
+        .input-file input[type=file]:disabled + span {
+            background-color: #eee;
+        }
+
+        /* Список c превью */
+        .input-file-list {
+            padding: 10px 0;
+        }
+
+        .input-file-list-item {
+            display: inline-block;
+            margin: 0 15px 15px;
+            width: 150px;
+            vertical-align: top;
+            position: relative;
+        }
+
+        .input-file-list-item img {
+            width: 150px;
+        }
+
+        .input-file-list-name {
+            text-align: center;
+            display: block;
+            font-size: 12px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        .input-file-list-remove {
+            color: #fff;
+            text-decoration: none;
+            display: inline-block;
+            position: absolute;
+            padding: 0;
+            margin: 0;
+            top: 5px;
+            right: 5px;
+            background: #ff0202;
+            width: 16px;
+            height: 16px;
+            text-align: center;
+            line-height: 16px;
+            border-radius: 50%;
+        }
+
+
+        .select {
+            position: relative;
+            min-width: 200px;
+        }
+
+        .select svg {
+            position: absolute;
+            right: 12px;
+            top: calc(50% - 3px);
+            width: 10px;
+            height: 6px;
+            stroke-width: 2px;
+            stroke: #9098a9;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            pointer-events: none;
+        }
+
+        .select select {
+            -webkit-appearance: none;
+            padding: 7px 40px 7px 12px;
+            width: 100%;
+            border: 1px solid #e8eaed;
+            border-radius: 5px;
+            background: #fff;
+            box-shadow: 0 1px 3px -2px #9098a9;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 16px;
+            transition: all 150ms ease;
+        }
+
+        .select select:required:invalid {
+            color: #5a667f;
+        }
+
+        .select select option {
+            color: #223254;
+        }
+
+        .select select option[value=""][disabled] {
+            display: none;
+        }
+
+        .select select:focus {
+            outline: none;
+            border-color: #07f;
+            box-shadow: 0 0 0 2px rgba(0, 119, 255, 0.2);
+        }
+
+        .select select:hover + svg {
+            stroke: #07f;
+        }
+
+        .sprites {
+            position: absolute;
+            width: 0;
+            height: 0;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .img_wrp {
+            display: flex;
+            flex-wrap: wrap;
+            background: #efefef;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .img {
+            width: 50px;
+            margin-right: 15px;
+        }
+
+        .img img {
+            width: 100%;
+        }
+
+    </style>
+
+
+    <div class="wrap-breadcrumb parallax-breadcrumb">
+        <div class="container"></div>
+    </div>
+
+    <div class="container">
+
+        <div class="row">
+
+            {% include "left.html" %}
+
+            <div id="content" class="col-sm-9  single-blog">
+                <ul class="breadcrumb">
+
+                    <li><a href="/"><i class="fa fa-home"></i></a></li>
+
+                    <li><a href="{{ book.book_cat.get_absolute_url }}">{{ book.book_cat.name_block }}</a></li>
+
+                    <li><a href="{{ book.get_absolute_url }}">{{ book.name_block }}
+                    </a>
+                    </li>
+
+                    <li>Онлайн читалка</li>
+
+                </ul>
+
+
+                <h1>Читаем книгу: {{ book.name_block }} </h1>
+
+
+                <style>
+                    /* Стили для читалки */
+                    #fb2-display {
+                        border: 1px solid #ddd;
+                        padding: 20px;
+                        margin-bottom: 10px;
+                        height: 500px;
+                        overflow: auto;
+                    }
+
+                    .navigation {
+                        text-align: center;
+                        margin-top: 10px;
+                    }
+                </style>
+                </head>
+                <body>
+
+                <div id="fb2-display">Здесь будет отображаться текст книги...</div>
+                <div class="navigation">
+                    <div id="page-number">Страница: 1</div>
+                    <button id="prev-page">Предыдущая страница</button>
+                    <button id="next-page">Следующая страница</button>
+                </div>
+
+
+                <script>
+
+                    function loadAndReadFB2(url) {
+                        fetch(url)
+                            .then(response => {
+                                if (response.ok) return response.text();
+                                throw new Error('Ошибка загрузки файла');
+                            })
+                            .then(fb2Content => {
+
+                                displayFB2Content(fb2Content);
+                            })
+                            .catch(error => {
+                                console.error('Произошла ошибка при чтении файла:', error);
+                            });
+                    }
+
+
+                    function displayFB2Content(fb2Content) {
+
+                        const pages = parseFB2(fb2Content);
+                        let currentPage = 0;
+
+
+                        function showPage(pageIndex) {
+                            const pageContent = pages[pageIndex];
+                            document.getElementById('fb2-display').innerHTML = pageContent;
+                            document.getElementById('page-number').textContent = 'Страница: ' + (pageIndex + 1);
+                        }
+
+
+                        document.getElementById('next-page').addEventListener('click', () => {
+                            if (currentPage < pages.length - 1) {
+                                currentPage++;
+                                showPage(currentPage);
+                            }
+                        });
+
+                        document.getElementById('prev-page').addEventListener('click', () => {
+                            if (currentPage > 0) {
+                                currentPage--;
+                                showPage(currentPage);
+                            }
+                        });
+
+
+                        showPage(0);
+                    }
+
+
+                    function parseFB2(fb2Content) {
+                        const parser = new DOMParser();
+                        const xmlDoc = parser.parseFromString(fb2Content, "application/xml");
+
+
+                        const body = xmlDoc.querySelector('body');
+                        const sections = body.querySelectorAll('section');
+
+
+                        let pages = [];
+                        let currentPageText = '';
+                        let currentPageHTML = '';
+                        let charCount = 0;
+                        const maxCharsPerPage = 2000;
+
+                        sections.forEach(section => {
+                            const paragraphs = section.querySelectorAll('p');
+                            paragraphs.forEach(paragraph => {
+                                const paragraphText = paragraph.textContent.trim();
+                                const paragraphHTML = '<p>' + paragraphText + '</p>';
+                                if (charCount + paragraphText.length > maxCharsPerPage) {
+
+                                    pages.push(currentPageHTML);
+                                    currentPageHTML = paragraphHTML;
+                                    charCount = paragraphText.length;
+                                } else {
+
+                                    currentPageHTML += paragraphHTML;
+                                    charCount += paragraphText.length;
+                                }
+                            });
+                        });
+
+
+                        if (currentPageText.trim() !== '') {
+                            pages.push(currentPageText);
+                        }
+
+                        return pages;
+                    }
+
+                    const bookUrl = '/media/{{book.file}}';
+                    loadAndReadFB2(bookUrl);
+
+                </script>
+            </div>
+        </div>
+    </div>
+
+    {% include "footer.html" %}
+{% endblock %}

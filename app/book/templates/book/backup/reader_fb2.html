@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Открытие FB2 файла</title>
+</head>
+<body>
+    <h1>Открытие FB2 файла</h1>
+    {% if book_content %}
+        <h2>Содержимое файла:</h2>
+        <pre>{{ book_content }}</pre>
+    {% else %}
+        <p>Файл FB2 не был открыт.</p>
+    {% endif %}
+</body>
+</html>

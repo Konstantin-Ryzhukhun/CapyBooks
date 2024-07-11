@@ -1,0 +1,39 @@
+{% load static %}
+{% load thumbnail %}
+
+<div class="blog-item">
+	<div class="product-block">
+		<div class="product-block-inner">
+
+			<div class="blog-left">
+				<div class="blog-image">
+					<img src="{{blog.get_img_tovar_thumbnail}}" alt="{{blog.name_block}}" title="{{blog.name_block}}"
+						class="img-thumbnail">
+					<div class="post-image-hover"> </div>
+					<p class="post_hover"><a class="icon zoom" title="Нажмите, чтобы просмотреть полное изображение"
+							href="/media/{{blog.image}}" data-lightbox="example-set"><i
+								class="fa fa-search-plus"></i> </a>
+						<a class="icon readmore_link" title="Нажмите, чтобы просмотреть Подробнее"
+							href="{{blog.get_absolute_url}}"><i
+								class="fa fa-link"></i></a>
+					</p>
+				</div>
+
+			</div>
+
+
+			<div class="blog-right">
+				<div class="date-comment">
+					<div class="date-time"><i class="fa fa-calendar"></i>{{ blog.created_at|date:"j" }} 
+						{{ blog.created_at|date:"F" }} {{ blog.created_at|date:" Y" }}</div>
+				</div>
+				<h4 class="blog_title">
+					<a href="{{blog.get_absolute_url}}">
+						{{blog.name_block|safe|truncatechars:"30"}}
+					</a> 
+				</h4>
+				<div class="blog-desc">{{blog.text_block|safe|truncatechars:"75"}}</div>
+			</div>
+		</div>
+	</div>
+</div>

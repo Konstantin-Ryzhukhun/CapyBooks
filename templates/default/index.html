@@ -1,0 +1,503 @@
+{% extends "base.html" %}
+{% load static %} 
+
+{% block title %}Мир книг{% endblock %}
+{% block description %}Лучшие книги для чтения3{% endblock %}
+
+{% block og_title %}Мир книг{% endblock %}
+{% block og_description %}Лучшие книги для чтения3{% endblock %}
+
+{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}
+{% block image_src %}https://books.s3files.ru/{% if catalog_category.image %}/media/{{catalog_category.image|safe}}{% else %}/media/zaglavka.png{% endif %}{% endblock %}
+{% block og_image %}https://books.s3files.ru/{% if catalog_category.image %}/media/{{catalog_category.image|safe}}{% else %}/media/zaglavka.png{% endif %}{% endblock %}
+
+
+{% block canonical %}{% if request.is_secure %}https://{% else %}http://{% endif %}{{ request.get_host }}{{ catalog_category.get_absolute_url }}{% endblock %}
+
+
+{% block content %}
+{% include "header.html" %}
+
+
+
+
+<div style="display:none" class="wrap-breadcrumb parallax-breadcrumb">
+	<div class="container"></div>
+</div>
+
+<!-- ======= Quick view JS ========= -->
+<script> 
+
+function quickbox(){
+ if ($(window).width() > 767) {
+		$('.quickview-button').magnificPopup({
+			type:'iframe',
+			delegate: 'a',
+			preloader: true,
+			tLoading: 'Loading image #%curr%...',
+		});
+ }	
+}
+jQuery(document).ready(function() {quickbox();});
+jQuery(window).resize(function() {quickbox();});
+
+</script>
+
+<div class="container">
+    <div class="content-top">
+    	  <div class="box" id="czservicecmsblock">
+<div class="service_container">
+<div class="service-area">
+
+<!-- 
+<div class="service-third service1">
+<div class="service-inner">
+<div class="service-icon icon1"></div>
+<div class="service-content">
+ <div class="service-heading">Сэкономьте до 20 % до пятницы</div>
+</div>
+</div>
+</div> -->
+
+<!-- 
+
+<div class="service-third service2">
+<div class="service-inner">
+<div class="service-icon icon2"></div>
+<div class="service-content">
+ <div class="service-heading">Бесплатная доставка от 700 руб</div> 
+</div>
+</div>
+</div> -->
+
+<!-- <div class="service-third service3">
+<div class="service-inner">
+<div class="service-icon icon3"></div>
+<div class="service-content">
+	<div class="service-heading">В приложении 30% скидка</div>
+</div>
+</div>
+</div> -->
+
+
+
+</div>
+</div>
+</div>
+<div class="main-slider">
+<div id="spinner"></div>
+<div class="swiper-viewport">
+  <div id="slideshow0" class="swiper-container">
+    <div class="swiper-wrapper"> 
+
+			{% for slider in slider.all %}
+			
+			<div class="swiper-slide text-center"><img src="/media/{{slider.image}}" alt="{{slider.name_block}}"
+						class="img-responsive" /></div>
+			
+			{% endfor %}
+		
+		</div>
+  </div>
+  <div class="swiper-pagination slideshow0"></div>
+  <div class="swiper-pager">
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+</div>
+</div>
+<script type="text/javascript"><!--
+$('#slideshow0').swiper({
+	mode: 'horizontal',
+	slidesPerView: 1,
+	pagination: '.slideshow0',
+	paginationClickable: true,
+	nextButton: '.swiper-button-next',
+    prevButton: '.swiper-button-prev',
+    spaceBetween: 0,
+	autoplay: 5000,
+    autoplayDisableOnInteraction: true,
+	effect: 'fade',
+	loop: true
+});
+--></script>
+
+<script type="text/javascript">
+	// Can also be used with $(document).ready()
+	$(window).load(function() {		
+	  $("#spinner").fadeOut("slow");
+	});	
+</script>
+  <div id="czsubbannercmsblock" class="block czsubbanners"> 
+<div class="czsubbanner_container">
+<div class="subbanners">
+<div class="one-half subbanner-part1">
+<div class="subbanner-inner">
+<div class="subbanner subbanner1"><a href="/catalog/filosofiya/" class="banner-anchor"><img src="/media/image/sub-banner-1.jpg" alt="sub-banner1" class="subbanner-image1"></a>
+<div class="subbanner-text">
+<div class="main-title">Мои любимые</div>
+</div>
+</div>
+</div>
+</div>
+<div class="one-half subbanner-part2">
+<div class="subbanner-inner">
+<div class="subbanner subbanner2"><a href="/catalog/priklyuchenie/" class="banner-anchor"><img src="/media/image/sub-banner-2.jpg" alt="sub-banner2" class="subbanner-image2"></a>
+<div class="subbanner-text">
+<div class="main-title">Приключения</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div> 
+</div>
+
+    </div>
+</div>  
+
+<div id="common-home" class="container">
+
+  <div class="row">
+	
+	
+{% include "left.html" %}
+
+                <div id="content" class="col-sm-9"> <div class="hometab box">
+<div class="container">
+<div class="tab-head">
+<div class="hometab-heading box-heading">Новые коллекции</div>
+<div id="tabs" class="htabs">
+<ul class="etabs">
+	<li class="tab">
+					<a href="#tab-latest" class="selected">Последний</a>
+			</li>
+	<li class="tab">
+				<a href="#tab-bestseller">Бестселлер</a>
+			</li>	
+	<li class="tab">
+					<a href="#tab-special">Особенный</a>
+			</li>
+	</ul>
+ </div>
+</div>
+
+<div id="tab-latest" class="tab-content">
+	<div class="box">
+				<div class="box-content">
+
+															
+												<div class="customNavigation">
+							<a class="fa prev fa-arrow-left">&nbsp;</a>
+							<a class="fa next fa-arrow-right">&nbsp;</a>
+						</div>	
+										<div class="box-product product-carousel" id="tablatest-carousel">
+
+								{% for book in latest.all %}
+								<li class="double-slideitem slider-item">
+								<ul>
+
+
+								
+									
+									<div class="slider-item">
+
+
+										{% include "book_prewie.html" %}
+
+										
+									</div>
+
+									
+
+								
+							
+								</ul>
+							</li>
+							{% endfor %}
+							
+							
+							
+						</div>
+				</div>
+				
+								
+			 </div>
+			 <span class="tablatest_default_width" style="display:none; visibility:hidden"></span>
+ </div>
+ 
+ <div id="tab-bestseller" class="tab-content">
+    	  <div class="box">
+				<div class="box-content">
+															
+						<div class="customNavigation">
+							<a class="fa prev fa-arrow-left">&nbsp;</a>
+							<a class="fa next fa-arrow-right">&nbsp;</a>
+						</div>	
+										
+					<div class="box-product product-carousel" id="tabbestseller-carousel">
+
+
+							{% for book in bestseller.all %}
+								<li class="double-slideitem slider-item">
+								<ul>
+									<div class="slider-item">
+										{% include "book_prewie.html" %}
+									</div>
+								</ul>
+							</li>
+							{% endfor %}
+
+
+							
+						
+
+
+									
+
+											</div>
+				</div>
+				
+								
+			 </div>
+		 <span class="tabbestseller_default_width" style="display:none; visibility:hidden"></span> 
+ </div>
+
+ <div id="tab-special" class="tab-content">
+    	 <div class="box">
+				<div class="box-content">
+					
+															
+					<div class="customNavigation">
+							<a class="fa prev fa-arrow-left">&nbsp;</a>
+							<a class="fa next fa-arrow-right">&nbsp;</a>
+						</div>	
+										
+					<div class="box-product product-carousel" id="tabspecial-carousel">
+					
+							
+						
+						
+						
+							{% for book in special.all %}
+								<li class="double-slideitem slider-item">
+								<ul>
+									<div class="slider-item">
+										{% include "book_prewie.html" %}
+									</div>
+								</ul>
+							</li>
+							{% endfor %}
+						
+								
+			 </div>
+		 <span class="tabspecial_default_width" style="display:none; visibility:hidden"></span> 
+ </div>
+
+</div></div>
+</div></div>
+<script type="text/javascript">
+$('#tabs a').tabs();
+</script> 
+  <div id="czbannercmsblock" class="block czbanners"> 
+<div class="czbanner_container">
+<div class="cmsbanners">
+<div class="one-half cmsbanner-part1">
+<div class="cmsbanner-inner">
+<!-- <div class="cmsbanner cmsbanner1"><a href="#" class="banner-anchor"><img src="/media/image/cms-banner-1.jpg" alt="cms-banner1" class="banner-image1"></a>
+<div class="cmsbanner-text">
+   <div class="main-title">Книги по дизайну  <br>интерьера</div>
+<div class="Shop-Now"><a href="#" class="shop-now">Купить сейчас</a></div> -->
+<!-- </div>
+</div>  -->
+</div>
+</div>
+<div class="one-half cmsbanner-part2">
+<div class="cmsbanner-inner">
+<!-- <div class="cmsbanner cmsbanner2"><a href="#" class="banner-anchor"><img src="/media/image/cms-banner-2.jpg" alt="cms-banner2" class="banner-image2"></a>
+<div class="cmsbanner-text">
+<div class="main-title">Коллекция книг  <br>по истории</div>
+<div class="Shop-Now"><a href="#" class="shop-now">Купить сейчас</a></div>
+</div>
+</div> -->
+</div>
+</div>
+</div>
+</div> 
+</div>
+<div class="box featured">
+	<div class="container">
+		<div class="box-head">
+			<div class="box-heading">Рекомендуемые книги</div>
+		</div>
+		<div class="box-content">
+
+			<div class="customNavigation">
+				<a class="fa prev fa-arrow-left">&nbsp;</a>
+				<a class="fa next fa-arrow-right">&nbsp;</a>
+			</div>
+
+			<div class="box-product product-carousel" id="featured-carousel">
+
+
+
+				{% for book in futured.all %}
+<div class="slider-item">
+					{% include "book_prewie.html" %}
+</div>
+				{% endfor %}
+
+
+
+
+			</div>
+		</div>
+	</div>
+</div>
+<span class="featured_default_width" style="display:none; visibility:hidden"></span>
+
+<div class="box blogs">
+					
+		<div class="box-head">
+			<div class="box-heading">Блог</div>
+		</div>
+		<div class="box-content">
+				
+			<div class="customNavigation">
+					<a class="fa prev czblog_prev"></a>
+					<a class="fa next czblog_next"></a>
+				</div>
+
+
+			
+						
+			<div class="box-product  owl-carousel blogcarousel " id="blog-carousel">
+				 
+					{% for blog in blog.all %}
+					
+					{% include "blog_prewie.html" %}
+					
+					{% endfor %}
+				 
+				   
+			</div>
+			<div class="buttons text-center">
+				<button type="button" onclick="location='indexc295.html?route=information/blogger/blogs';" class="btn btn-primary">See all Blogs</button>
+			</div>
+		</div>
+</div>
+<span class="blog_default_width" style="display:none; visibility:hidden"></span>
+
+<script type="text/javascript"><!--
+
+$(document).ready(function(){
+	$('.blogcarousel').owlCarousel({
+		items: 3,
+		singleItem: false,
+		navigation: false,
+		pagination: false,
+		itemsDesktop : [1199,2],
+		itemsDesktopSmall :	[991,2],
+		itemsTablet :	[575,1]
+	});
+	// Custom Navigation Events
+	$(".czblog_next").click(function(){
+		$('.blogcarousel').trigger('owl.next');
+	})
+	$(".czblog_prev").click(function(){
+		$('.blogcarousel').trigger('owl.prev');
+	});	
+});	
+--></script>
+<div id="carousel-0" class="banners-slider-carousel box">
+	<div class="box-head">
+		<div class="box-heading">Top Brands</div>
+	</div>
+	<div class="carousel-block box-content">
+		<div class="customNavigation">
+			<a class="brand-prev fa prev">&nbsp;</a>
+			<a class="brand-next fa next">&nbsp;</a>
+		</div>
+		<div class="brand-carousel" id="module-0-carousel">
+							<div class="slider-item">
+					<div class="product-block">
+						<div class="product-block-inner">
+														<img src="/media/image/1-capy.png" alt="Nintendo" />
+													</div>
+					</div>
+				</div>
+							<div class="slider-item">
+					<div class="product-block">
+						<div class="product-block-inner">
+														<img src="/media/image/2-capy.png" alt="Starbucks" />
+													</div>
+					</div>
+				</div>
+							<div class="slider-item">
+					<div class="product-block">
+						<div class="product-block-inner">
+														<img src="/media/image/3-capy.png" alt="Dell" />
+													</div>
+					</div>
+				</div>
+							<div class="slider-item">
+					<div class="product-block">
+						<div class="product-block-inner">
+														<img src="/media/image/4-capy.png" alt="Disney" />
+													</div>
+					</div>
+				</div>
+							<div class="slider-item">
+					<div class="product-block">
+						<div class="product-block-inner">
+														<img src="/media/image/5-capy.png" alt="Harley Davidson" />
+													</div>
+					</div>
+				</div>
+							<div class="slider-item">
+					<div class="product-block">
+						<div class="product-block-inner">
+														<img src="/media/image/4-capy.png" alt="Canon" />
+													</div>
+					</div>
+				</div>
+							<div class="slider-item">
+					<div class="product-block">
+						<div class="product-block-inner">
+														<img src="/media/image/3-capy.png" alt="Burger King" />
+													</div>
+					</div>
+				</div> 
+							 <div class="slider-item">
+					<div class="product-block">
+						<div class="product-block-inner">
+														<img src="/media/image/2-capy.png" alt="Coca Cola" />
+													</div>
+					</div>
+				</div>
+							<div class="slider-item">
+					<div class="product-block">
+						<div class="product-block-inner">
+														<img src="/media/image/1-capy.png" alt="Sony" />
+													</div>
+					</div>
+				</div>
+							<div class="slider-item">
+					<div class="product-block">
+						<div class="product-block-inner">
+														<img src="/media/image/3-capy.png" alt="NFL" />
+													</div>
+					</div>
+				</div>
+					</div>
+	</div>
+</div>
+<span class="module_default_width" style="display:none; visibility:hidden"></span>
+</div>
+    </div>
+</div>
+</div>
+</div>
+
+{% include "footer.html" %}
+{% endblock %}

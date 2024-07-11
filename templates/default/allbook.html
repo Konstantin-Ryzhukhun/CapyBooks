@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %} 
+{% block content %}
+{% include "header.html" %}
+
+<div class="wrap-breadcrumb parallax-breadcrumb">
+	<div class="container"></div>
+</div>
+
+<div class="container">
+
+	<div class="row">
+
+		{% include "left.html" %}
+
+		<div id="content" class="col-sm-9  single-blog">
+			<ul class="breadcrumb">
+
+				<li><a href="/"><i class="fa fa-home"></i></a></li>
+
+				<li>Все книги</li>
+
+			</ul>
+			<h1>Все книги</h1>
+
+			
+		
+<ol style="font-size: 18px;">
+			{% for book in allbook.all %}
+			
+				<li style="margin-bottom: 10px"><a href="{{book.get_absolute_url}}">{{book.name_block|safe}}</a></li>					
+			{% empty %}
+					<p style="font-size: 16px">Нет книг</p>
+			{% endfor %}
+		</ol>
+
+		
+		</div>
+	</div>
+</div>
+
+
+{% include "footer.html" %}
+{% endblock %}

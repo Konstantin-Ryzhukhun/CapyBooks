@@ -1,0 +1,402 @@
+{% extends "base.html" %}
+{% load static %} 
+{% block content %}
+{% include "header.html" %}
+
+
+<style>
+    .input-file-row {
+	display: inline-block;
+}
+.input-file {
+	position: relative;
+	display: inline-block;
+}
+.input-file span {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	outline: none;
+	text-decoration: none;
+	font-size: 14px;
+	vertical-align: middle;
+	color: rgb(255 255 255);
+	text-align: center;
+	border-radius: 4px;
+	background-color: #e56220;
+	line-height: 22px;
+	height: 40px;
+	padding: 10px 20px;
+	box-sizing: border-box;
+	border: none;
+	margin: 0;
+	transition: background-color 0.2s;
+}
+.input-file input[type=file] {
+	position: absolute;
+	z-index: -1;
+	opacity: 0;
+	display: block;
+	width: 0;
+	height: 0;
+}
+ 
+/* Focus */
+.input-file input[type=file]:focus + span {
+	box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+ 
+/* Hover/active */
+.input-file:hover span {
+	background-color: #e37f4c;
+}
+.input-file:active span {
+	background-color: #e56220;
+}
+ 
+/* Disabled */
+.input-file input[type=file]:disabled + span {
+	background-color: #eee;
+}
+ 
+/* Список c превью */
+.input-file-list {
+	padding: 10px 0;
+}
+.input-file-list-item {
+	display: inline-block;
+	margin: 0 15px 15px;
+	width: 150px;
+	vertical-align: top;
+	position: relative;
+}
+.input-file-list-item img {
+	width: 150px;
+}
+.input-file-list-name {
+	text-align: center;
+	display: block;
+	font-size: 12px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.input-file-list-remove {
+	color: #fff;
+	text-decoration: none;
+	display: inline-block;
+	position: absolute;
+	padding: 0;
+	margin: 0;
+	top: 5px;
+	right: 5px;
+	background: #ff0202;
+	width: 16px;
+	height: 16px;
+	text-align: center;
+	line-height: 16px;
+	border-radius: 50%;
+}
+
+
+.select {
+  position: relative;
+  min-width: 200px;
+}
+.select svg {
+  position: absolute;
+  right: 12px;
+  top: calc(50% - 3px);
+  width: 10px;
+  height: 6px;
+  stroke-width: 2px;
+  stroke: #9098a9;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.select select {
+  -webkit-appearance: none;
+  padding: 7px 40px 7px 12px;
+  width: 100%;
+  border: 1px solid #e8eaed;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0 1px 3px -2px #9098a9;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 16px;
+  transition: all 150ms ease;
+}
+.select select:required:invalid {
+  color: #5a667f;
+}
+.select select option {
+  color: #223254;
+}
+.select select option[value=""][disabled] {
+  display: none;
+}
+.select select:focus {
+  outline: none;
+  border-color: #07f;
+  box-shadow: 0 0 0 2px rgba(0,119,255,0.2);
+}
+.select select:hover + svg {
+  stroke: #07f;
+}
+.sprites {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.img_wrp {
+    display: flex;
+    flex-wrap: wrap;
+    background: #efefef;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.img {
+    width: 50px;
+    margin-right: 15px;
+}
+
+.img img{
+    width: 100%;
+}
+
+</style>
+
+
+<div class="wrap-breadcrumb parallax-breadcrumb">
+	<div class="container"></div>
+</div>
+
+<div class="container">
+
+	<div class="row">
+
+		{% include "left.html" %}
+
+		<div id="content" class="col-sm-9  single-blog">
+			<ul class="breadcrumb">
+
+				<li><a href="/"><i class="fa fa-home"></i></a></li>
+
+				<li>Профиль пользователя</li>
+
+			</ul>
+
+
+			<h1>Привет, {{ user }}! </h1>
+
+       <div class="well">
+            
+               <div class="">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Загруженные книги:</h4>
+                </div>
+                <div class="card-body">
+                    {% if user_books %}
+                       
+                            {% for book in user_books %}
+                               
+                                    <div class="img_wrp">
+                                        <div class="img"><img src="/media/{{ book.image }}" alt="{{ book.name_block }}"></div>
+
+                                        <div class="img_r">
+                                            <a href="{% url 'book_full' book.book_cat.book_cat_slug book.book_slug %}">  {{ book.name_block }}</a><br>
+                                        
+                                            <a href="{{ book.file.url }}" target="_blank">Скачать</a>
+                                        
+                                            <a href="{% url 'book_full' book.book_cat.book_cat_slug book.book_slug %}prewie/" target="_blank">Читать</a>
+                                        </div>
+                                    </div>
+                               
+                            {% endfor %}
+                        
+                    {% else %}
+                        <p>Еще нет загруженных книг</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h1>Загрузка книги</h1>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                   
+
+
+                            <div>
+                                <label for="id_name_block">Название книги</label><br>
+                                <input type="text" class="form-control" name="name_block" maxlength="255" required="" id="id_name_block">
+                            </div>
+
+                        
+                            <div>
+                                <label for="id_book_slug">Url</label><br>
+                                <input type="text" class="form-control" name="book_slug" maxlength="255" required="" id="id_book_slug">
+                            </div>
+
+                           
+                            <div>
+                                <label for="id_book_cat">Книга относится к категории</label>
+                            </div>
+
+
+<label class="select" for="slct">
+  <select id="slct" required="required" name="book_cat" id="id_book_cat">
+ 
+  <option value="1">Приключение</option>
+
+  <option value="2">Сказки</option>
+
+  <option value="3">Фантастика</option>
+
+  <option value="4">Философия</option>
+
+  <option value="5">Кулинария</option>
+
+  <option value="6">Дети</option>
+
+  <option value="7">Психология</option>
+
+  </select>
+  <svg>
+    <use xlink:href="#select-arrow-down"></use>
+  </svg>
+</label>
+<!-- SVG Sprites-->
+<svg class="sprites">
+  <symbol id="select-arrow-down" viewbox="0 0 10 6">
+    <polyline points="1 1 5 5 9 1"></polyline>
+  </symbol>
+</svg>
+
+
+
+
+                            
+
+                           
+
+                        
+                          
+                            <div> <label for="id_image">Картинка</label></div>
+                        
+                            <div class="input-file-row">
+                                <label class="input-file">
+                                    <input type="file" name="image" accept="image/*" id="id_image">		
+                                    <span>Выберите файл</span>
+                                </label>
+                                <div class="input-file-list"></div>  
+                            </div>
+
+                        
+                            <div> <label for="id_image2">Картинка-2</label></div>
+                        
+                            <div class="input-file-row">
+                                <label class="input-file">
+                                    <input type="file" name="image2" accept="image/*"  id="id_image2">		
+                                    <span>Выберите файл</span>
+                                </label>
+                                <div class="input-file-list"></div>  
+                            </div><br>
+
+                        
+                           
+                            <div><label for="id_opisanie_mini">Описание краткое</label></div> 
+                       
+                            <textarea class="form-control" name="opisanie_mini" class="" id="id_opisanie_mini"></textarea><br>
+                            
+                            <div>
+                                <label for="id_file">Файл fb2</label>
+                            </div>
+
+                            <div class="input-file-row">
+                                <label class="input-file">
+                                    <input type="file" name="file">		
+                                    <span>Выберите файл</span>
+                                </label>
+                                <div class="input-file-list"></div>  
+                            </div>
+                            
+                            <br>
+                        <button type="submit" class="btn btn-primary">Загрузить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+        {% comment %}  {% endcomment %}
+
+		</div>
+
+
+	</div>
+</div>
+
+
+<script>
+    var dt = new DataTransfer();
+ 
+$('.input-file input[type=file]').on('change', function(){
+    let $files_list = $(this).closest('.input-file').next();
+    $files_list.empty();
+ 
+    for(var i = 0; i < this.files.length; i++){
+        let file = this.files.item(i);
+        dt.items.add(file);    
+   
+        let reader = new FileReader();
+        reader.onloadend = function(){
+            let file_html;
+            if(file.type.match('image.*')) {
+                file_html = '<div class="input-file-list-item">' +
+                    '<img class="input-file-list-img" src="' + reader.result + '">' +
+                    '<span class="input-file-list-name">' + file.name + '</span>' +
+                    '<a href="#" onclick="removeFilesItem(this); return false;" class="input-file-list-remove">x</a>' +
+                '</div>';
+            } else {
+                // Здесь можно добавить другой HTML для неизображений
+                file_html = '<div class="input-file-list-item">' +
+                    '<span class="input-file-list-name">' + file.name + '</span>' +
+                    '<a href="#" onclick="removeFilesItem(this); return false;" class="input-file-list-remove">x</a>' +
+                '</div>';
+            }
+            $files_list.append(file_html); 
+        }
+        reader.readAsDataURL(file);
+    };
+    this.files = dt.files;
+});
+ 
+function removeFilesItem(target){
+	let name = $(target).prev().text();
+	let input = $(target).closest('.input-file-row').find('input[type=file]');	
+	$(target).closest('.input-file-list-item').remove();	
+	for(let i = 0; i < dt.items.length; i++){
+		if(name === dt.items[i].getAsFile().name){
+			dt.items.remove(i);
+		}
+	}
+	input[0].files = dt.files;  
+}
+</script>
+
+
+{% include "footer.html" %}
+{% endblock %}

@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}{{wiki_cat.name_block|safe}}{% endblock %}
+{% block description %}{{wiki_cat.name_block|safe}}{% endblock %}
+
+{% block og_title %}{{wiki_cat.name_block|safe}}{% endblock %}
+{% block og_description %}{{wiki_cat.name_block|safe}}{% endblock %}
+
+{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}
+{% block image_src %}https://rkehome.taplk.ru{% if wiki_cat.image %}/media/{{wiki_cat.image|safe}}{% else %}/media/zaglavka.png{% endif %}{% endblock %}
+{% block og_image %}https://rkehome.taplk.ru{% if wiki_cat.image %}/media/{{wiki_cat.image|safe}}{% else %}/media/zaglavka.png{% endif %}{% endblock %}
+
+
+{% block canonical %}{% if request.is_secure %}https://{% else %}http://{% endif %}{{ request.get_host }}{{ catalog_category.get_absolute_url }}{% endblock %}
+
+
+{% block content %}
+{% include "header.html" %}
+
+
+
+
+
+
+
+
+<div class="wrap-breadcrumb parallax-breadcrumb">
+	<div class="container"></div>
+</div>
+
+<div class="container">
+
+	<div class="row">
+
+		{% include "left.html" %}
+
+		<div id="content" class="col-sm-9  single-blog">
+			<ul class="breadcrumb">
+
+				<li><a href="/"><i class="fa fa-home"></i></a></li>
+
+				<li>{{book_cat.name_block}}</li>
+
+			</ul>
+
+
+
+
+
+<div class="row category_thumb">
+                <!-- <div class="col-sm-2 category_img"><img src="/library/image/cache/catalog/category-banner-920x200.jpg" alt="Books" title="Books" class="img-thumbnail"></div> -->
+                
+        <div class="col-sm-12">
+        	<h1 class="page-title">{{book_cat.name_block}}</h1>
+        </div>
+
+        <div class="col-sm-10 category_description">
+</div>
+              </div>
+
+
+
+			  <div id="products">
+
+
+
+
+				 <div class="cat_prod row">
+
+
+{% for book in tovar_all %}
+	<div class="product-layout product-grid col-lg-4 col-md-4 col-sm-4 col-xs-6">						
+	        {% include "book_prewie.html" %}
+	</div>						
+{% empty %}
+        <p style="font-size: 16px">Нет постов</p>
+{% endfor %}
+
+
+
+				 </div>
+
+
+<div class="pagination-wrapper">
+			<div class="col-sm-6 text-left page-link">
+                              
+                         
+   {% if tovar_all.paginator.num_pages > 1 %}
+                    <ul class="pagination">
+                        {% if tovar_all.has_previous %}
+                       <li> <a class="paginator_b" rel="prev" href="?page={{ tovar_all.previous_page_number }}">←</a></li>{% else %} {% endif %}
+                        {% if tovar_all.previous_page_number > 2 %}
+                         <li>  <a class="paginator_a" href="?page=1">1</a> </li>
+                           <li>      <span class="paginator_a_dots">...</span> </li>
+                        {% else %} {% endif %}
+                        {% for i in tovar_all.paginator.page_range %}
+                        {% if tovar_all.number == i %}
+                        <li class="active">   <span class="paginator_current">{{ i }}</span> </li>
+                        {% elif i > tovar_all.number|add:'-2' and i < tovar_all.number|add:'10' %} 
+						  <li > <a class="paginator_a" title="" href="?page={{ i }}">{{ i }}</a> </li>
+                            {% endif %}
+                            {% endfor %}
+
+
+                            {% if tovar_all.has_next and tovar_all.paginator.num_pages > 5 %}
+                            <li>   <span class="paginator_a_dots">…</span> </li>
+                             <li>  <a class="paginator_c" title="" href="?page={{ tovar_all.paginator.num_pages }}">{{ tovar_all.paginator.num_pages }}</a> </li>
+                             <li>  <a class="paginator_b" rel="next" style="margin-right: 0;" href="?page={{ tovar_all.next_page_number }}">→</a> </li>
+                            {% else %} {% endif %}
+                
+                    </ul>
+                    {% else %} {% endif %}
+
+
+                        </div>
+
+			<div class="col-sm-6 text-right page-result"></div>
+	   </div>
+			  </div>
+
+
+		</div>
+
+	</div>
+</div>
+
+
+
+{% include "footer.html" %}
+{% endblock %}

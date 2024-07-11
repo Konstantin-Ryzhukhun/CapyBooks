@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reader FB2</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Reader FB2</h1>
+                <div id="fb2-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get the FB2 file URL from the query parameter
+        var fb2FileUrl = new URLSearchParams(window.location.search).get('file');
+
+        // Open the FB2 file in a new tab
+        window.open(fb2FileUrl, '_blank');
+    </script>
+</body>
+</html>
